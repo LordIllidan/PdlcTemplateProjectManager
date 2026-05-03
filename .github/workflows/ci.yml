@@ -1,0 +1,33 @@
+name: PLDC Project Manager CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Context documentation
+        shell: pwsh
+        run: pwsh ./scripts/ci/Test-ContextDocs.ps1
+
+      - name: Change documentation
+        shell: pwsh
+        run: pwsh ./scripts/ci/Test-ChangeDocs.ps1
+
+      - name: PR documentation gate
+        shell: pwsh
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: pwsh ./scripts/ci/Validate-Docs.ps1

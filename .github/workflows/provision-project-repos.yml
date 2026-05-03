@@ -1,0 +1,40 @@
+name: Provision PLDC project repos
+
+on:
+  workflow_dispatch:
+    inputs:
+      display_name:
+        required: true
+        type: string
+        description: Czytelna nazwa projektu (np. System do zarządzania szablonami maili)
+      project_slug:
+        required: true
+        type: string
+        description: ASCII slug (np. mail-templates-system)
+      visibility:
+        required: true
+        type: choice
+        description: Widoczność nowych repozytoriów
+        options:
+          - public
+          - private
+        default: public
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  provision:
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'issues' && github.event.action == 'labeled' && github.event.label.name == 'pdlc-provision') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Provision repositories
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.PDLC_REPO_ADMIN_TOKEN }}
+        run: pwsh ./scripts/ci/Invoke-ProvisionRepos.ps1

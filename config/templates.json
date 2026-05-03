@@ -1,0 +1,41 @@
+{
+  "owner_default": "LordIllidan",
+  "templates": [
+    {
+      "id": "frontend",
+      "template_repo": "LordIllidan/PdlcTemplateAngularFrontend",
+      "repo_suffix": "fe",
+      "description_suffix": "Frontend (Angular)"
+    },
+    {
+      "id": "api",
+      "template_repo": "LordIllidan/PdlcTemplateDotNetApi",
+      "repo_suffix": "api",
+      "description_suffix": "Backend API (.NET)"
+    },
+    {
+      "id": "database",
+      "template_repo": "LordIllidan/PdlcTemplateLiquibaseDb",
+      "repo_suffix": "db",
+      "description_suffix": "Database migrations (Liquibase)"
+    },
+    {
+      "id": "gitops",
+      "template_repo": "LordIllidan/PdlcTemplateFluxGitOps",
+      "repo_suffix": "gitops",
+      "description_suffix": "GitOps (Flux)"
+    },
+    {
+      "id": "hub",
+      "template_repo": "LordIllidan/PdlcTemplatePLDCHub",
+      "repo_suffix": "hub",
+      "description_suffix": "PLDC solution hub (repo map)"
+    },
+    {
+      "id": "docs",
+      "template_repo": "LordIllidan/PdlcTemplatePLDCProjectDocs",
+      "repo_suffix": "docs",
+      "description_suffix": "Project documentation hub"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+name: New PLDC project (provision)
+description: Zainicjuj zestaw repozytoriów projektu PLDC z szablonów (po dodaniu labela pdlc-provision).
+title: "[provision] "
+labels:
+  - pdlc-project
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Po utworzeniu issue **dodaj label `pdlc-provision`**, aby uruchomić CI tworzące repozytoria (wymagany sekret `PDLC_REPO_ADMIN_TOKEN`).
+
+        Tytuł musi zaczynać się od `[provision]` — dalej wpisz czytelną nazwę projektu (po polsku OK).
+
+  - type: input
+    id: project-slug
+    attributes:
+      label: Project slug (ASCII)
+      description: Krótka nazwa techniczna repozytoriów (tylko a-z, 0-9, myślnik). Przykład testowy dla „System do zarządzania szablonami maili” — `mail-templates-system`.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: visibility
+    attributes:
+      label: Visibility
+      description: Widoczność nowo tworzonych repozytoriów.
+      options:
+        - public
+        - private
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Short description
+      description: Krótki opis biznesowy / techniczny (trafi do pola description na GitHubie repozytoriów, skrócony przez CI).
+    validations:
+      required: true
