@@ -13,7 +13,7 @@
 3. Uzupełnij pola (slug ASCII, widoczność, krótki opis).
 4. Zapisz issue, potem dodaj label **`pdlc-provision`**.
 
-Workflow `Provision PLDC project repos` utworzy brakujące repozytoria (`gh repo create … --template …`) i doda komentarz z linkami.
+Workflow `Provision PLDC project repos` utworzy brakujące repozytoria (`gh repo create … --template …`), **zaktualizuje** `config/solutions/sample.json` w repozytorium `*-hub` (linki do `*-fe`, `*-api`, `*-db`, `*-gitops`) oraz doda komentarz z linkami (dla ścieżki z issue).
 
 ## Ścieżka ręczna (Actions)
 
@@ -21,4 +21,4 @@ Workflow `Provision PLDC project repos` utworzy brakujące repozytoria (`gh repo
 
 ## Idempotentność
 
-Jeśli repo o docelowej nazwie już istnieje, provisioning je **pomija** (nie nadpisuje).
+Jeśli repo o docelowej nazwie już istnieje, provisioning je **pomija** (nie nadpisuje). Aktualizacja profilu w hubie jest wykonywana **nawet przy samych SKIP** — możesz ponownie uruchomić workflow, aby naprawić linki w `sample.json`.

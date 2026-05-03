@@ -59,6 +59,78 @@ function Get-FirstNonEmptyLine {
     return ''
 }
 
+function Get-GitHubRestHeaders {
+    return @{
+        Authorization          = "Bearer $($env:GH_TOKEN)"
+        Accept                 = 'application/vnd.github+json'
+        'X-GitHub-Api-Version' = '2022-11-28'
+        'User-Agent'           = 'pdlc-project-manager-provision'
+    }
+}
+
+function Update-HubProvisionedSolutionProfile {
+    param(
+        [Parameter(Mandatory = $true)][string]$Owner,
+        [Parameter(Mandatory = $true)][string]$Slug,
+        [Parameter(Mandatory = $true)][string]$DisplayName
+    )
+
+    $hubRepo = "$Owner/$Slug-hub"
+    gh repo view $hubRepo 1>$null 2>$null
+    if ($LASTEXITCODE -ne 0) {
+        return 'SKIP hub profile update (hub repo not found).'
+    }
+
+    $headers = Get-GitHubRestHeaders
+    $repoApi = "https://api.github.com/repos/$hubRepo"
+    $repoInfo = Invoke-RestMethod -Method Get -Uri $repoApi -Headers $headers
+    $branch = [string]$repoInfo.default_branch
+    if ([string]::IsNullOrWhiteSpace($branch)) {
+        throw "Could not read default_branch for $hubRepo."
+    }
+
+    $path = 'config/solutions/sample.json'
+    $getUri = "https://api.github.com/repos/$hubRepo/contents/$path" + "?ref=$([Uri]::EscapeDataString($branch))"
+    $existing = Invoke-RestMethod -Method Get -Uri $getUri -Headers $headers
+    if ($existing.type -ne 'file' -or [string]::IsNullOrWhiteSpace($existing.sha)) {
+        throw "Unexpected GitHub contents payload for $hubRepo/$path (missing sha)."
+    }
+
+    $projectCode = ($Slug -replace '-', '').ToUpperInvariant()
+    if ($projectCode.Length -gt 32) {
+        $projectCode = $projectCode.Substring(0, 32)
+    }
+
+    $profile = [ordered]@{
+        project = [ordered]@{
+            name = $DisplayName
+            code = $projectCode
+        }
+        repos   = [ordered]@{
+            frontend       = "https://github.com/$Owner/$Slug-fe"
+            backend_dotnet = "https://github.com/$Owner/$Slug-api"
+            gitops         = "https://github.com/$Owner/$Slug-gitops"
+            liquibase_db   = "https://github.com/$Owner/$Slug-db"
+        }
+    }
+
+    $json = ($profile | ConvertTo-Json -Depth 10 -Compress)
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes($json)
+    $b64 = [Convert]::ToBase64String($bytes)
+
+    $putUri = "https://api.github.com/repos/$hubRepo/contents/$path"
+    $putBody = @{
+        message = 'chore: set PLDC hub profile to provisioned repositories'
+        content = $b64
+        sha     = [string]$existing.sha
+        branch  = $branch
+    } | ConvertTo-Json -Compress
+
+    Invoke-RestMethod -Method Put -Uri $putUri -Headers $headers -Body $putBody -ContentType 'application/json; charset=utf-8' | Out-Null
+
+    return "UPDATED hub profile: $hubRepo/$path (branch $branch)"
+}
+
 $displayName = $null
 $slug = $null
 $visibility = 'public'
@@ -165,6 +237,13 @@ foreach ($t in @($cfg.templates)) {
     $results.Add("CREATED: https://github.com/$target")
 }
 
+try {
+    $results.Add((Update-HubProvisionedSolutionProfile -Owner $owner -Slug $slug -DisplayName $displayName))
+}
+catch {
+    $results.Add("WARN hub profile update failed: $($_.Exception.Message)")
+}
+
 $hubUrl = "https://github.com/$owner/$slug-hub"
 $docsUrl = "https://github.com/$owner/$slug-docs"
 
@@ -174,7 +253,7 @@ $comment += ''
 $comment += $results
 $comment += ''
 $comment += '### Next steps'
-$comment += "- Uzupełnij profil rozwiązania w hubie: ``$owner/$slug-hub`` (pliki w ``config/solutions/`` + ``config/current-solution.json``) linkami do utworzonych repozytoriów."
+$comment += "- Hub ``$owner/$slug-hub``: profil ``config/solutions/sample.json`` jest nadpisywany przez CI linkami do repo ``$slug-fe|api|db|gitops`` (oraz nazwa/kod projektu z provisioning)."
 $comment += "- Dokumentacja projektu: ``$owner/$slug-docs``."
 $comment += "- Frontend / API / DB / GitOps: repozytoria z sufiksami ``fe``, ``api``, ``db``, ``gitops``."
 $comment += ''

@@ -4,7 +4,7 @@ Szablon repozytorium **Project Manager** dla PLDC: z poziomu **Issue** uruchamia
 
 ## Wymagania (GitHub)
 
-1. **Sekret** `PDLC_REPO_ADMIN_TOKEN` — PAT użytkownika lub bot-account z prawem tworzenia repozytoriów pod docelowym kontem/organizacją (np. scope `repo` dla konta użytkownika).
+1. **Sekret** `PDLC_REPO_ADMIN_TOKEN` — PAT z prawem **tworzenia repozytoriów** oraz **zapisu plików** w repozytoriach (aktualizacja `sample.json` w `*-hub` odbywa się przez [Contents API](https://docs.github.com/en/rest/repos/contents#create-or-update-file-contents); typowo scope **`repo`** dla tokenów classic).
 2. **Etykieta** `pdlc-provision` — utwórz ją raz w repozytorium (Issues → Labels), workflow reaguje na dodanie tej etykiety do issue.
 3. Wszystkie repozytoria w `config/templates.json` muszą być oznaczone jako **Template** na GitHubie (`is_template=true`).
 
@@ -19,7 +19,7 @@ Alternatywa: **Actions → Provision PLDC project repos → Run workflow** (ręc
 
 ## Po provisioning
 
-- W repozytorium **`*-hub`** uzupełnij `config/solutions/*.json` linkami do utworzonych repo FE/API/GitOps/DB/Docs (szablon hubu zawiera przykład).
+- CI **nadpisuje** w `*-hub` plik `config/solutions/sample.json` (URL-e do `*-fe`, `*-api`, `*-db`, `*-gitops` oraz `project.name` / `project.code` z danych provisioning).
 - W repozytorium **`*-docs`** zbieraj dokumentację projektu; w kodzie trzymaj tylko odesłania do `docs/`.
 
 ## Testowy przykład biznesowy
