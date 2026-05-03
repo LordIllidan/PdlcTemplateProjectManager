@@ -1,3 +1,1 @@
-{
-  "systems": []
-}
+{"systems":[{"slug":"underwriter-manager-system","displayName":"Zarzadzanie zasobami ludzkimi i ich obciążeniem","owner":"LordIllidan","visibility":"private","hub":"https://github.com/LordIllidan/underwriter-manager-system-hub","docs":"https://github.com/LordIllidan/underwriter-manager-system-docs","trigger":"https://github.com/LordIllidan/PdlcTemplateProjectManager/actions/runs/25283033627","provisionedAtUtc":"2026-05-03T15:22:52.6735350Z"}]}
