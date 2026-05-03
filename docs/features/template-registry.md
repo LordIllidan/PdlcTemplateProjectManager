@@ -13,6 +13,7 @@ Jedno miejsce z referencjami do **wszystkich** oficjalnych template repozytorió
 | `db` | `LordIllidan/PdlcTemplateLiquibaseDb` | Migracje Liquibase |
 | `gitops` | `LordIllidan/PdlcTemplateFluxGitOps` | GitOps Flux |
 | `hub` | `LordIllidan/PdlcTemplatePLDCHub` | Hub konfiguracji rozwiązania |
+| `control` | `LordIllidan/PdlcTemplatePLDCOrchestrator` | Orchestrator (issue → dispatch) |
 | `docs` | `LordIllidan/PdlcTemplatePLDCProjectDocs` | Dokumentacja projektu |
 
 ## Nazewnictwo

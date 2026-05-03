@@ -32,6 +32,12 @@
       "description_suffix": "PLDC solution hub (repo map)"
     },
     {
+      "id": "orchestrator",
+      "template_repo": "LordIllidan/PdlcTemplatePLDCOrchestrator",
+      "repo_suffix": "control",
+      "description_suffix": "PLDC orchestrator (issues + dispatch)"
+    },
+    {
       "id": "docs",
       "template_repo": "LordIllidan/PdlcTemplatePLDCProjectDocs",
       "repo_suffix": "docs",

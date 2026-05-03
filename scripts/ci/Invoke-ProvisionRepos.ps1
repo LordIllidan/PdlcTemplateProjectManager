@@ -111,6 +111,7 @@ function Update-HubProvisionedSolutionProfile {
             backend_dotnet = "https://github.com/$Owner/$Slug-api"
             gitops         = "https://github.com/$Owner/$Slug-gitops"
             liquibase_db   = "https://github.com/$Owner/$Slug-db"
+            orchestrator   = "https://github.com/$Owner/$Slug-control"
         }
     }
 
@@ -457,9 +458,9 @@ $comment += $results
 $comment += ''
 $comment += '### Next steps'
 $comment += "- **Lista systemów:** [`docs/systems.md`](https://github.com/$($env:GITHUB_REPOSITORY)/blob/main/docs/systems.md) oraz [`config/provisioned-systems.json`](https://github.com/$($env:GITHUB_REPOSITORY)/blob/main/config/provisioned-systems.json) (aktualizowane przez CI)."
-$comment += "- Hub ``$owner/$slug-hub``: profil ``config/solutions/sample.json`` jest nadpisywany przez CI linkami do repo ``$slug-fe|api|db|gitops`` (oraz nazwa/kod projektu z provisioning)."
+$comment += "- Hub ``$owner/$slug-hub``: profil ``config/solutions/sample.json`` jest nadpisywany przez CI linkami do repo ``$slug-fe|api|db|gitops|control`` (oraz nazwa/kod projektu z provisioning)."
 $comment += "- Dokumentacja projektu: ``$owner/$slug-docs``."
-$comment += "- Frontend / API / DB / GitOps: repozytoria z sufiksami ``fe``, ``api``, ``db``, ``gitops``."
+$comment += "- Frontend / API / DB / GitOps / Orchestrator: repozytoria z sufiksami ``fe``, ``api``, ``db``, ``gitops``, ``control``."
 $comment += ''
 $comment += "Hub: $hubUrl"
 $comment += "Docs: $docsUrl"

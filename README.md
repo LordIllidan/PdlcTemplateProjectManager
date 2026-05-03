@@ -1,6 +1,6 @@
 # PdlcTemplateProjectManager
 
-Szablon repozytorium **Project Manager** dla PLDC: z poziomu **Issue** uruchamiasz provisioning — CI tworzy **komplet repozytoriów** projektu z istniejących **template repozytoriów** (Angular FE, .NET API, Liquibase, Flux GitOps, PLDC Hub, Project Docs).
+Szablon repozytorium **Project Manager** dla PLDC: z poziomu **Issue** uruchamiasz provisioning — CI tworzy **komplet repozytoriów** projektu z istniejących **template repozytoriów** (Angular FE, .NET API, Liquibase, Flux GitOps, PLDC Hub, **PLDC Orchestrator**, Project Docs).
 
 ## Wymagania (GitHub)
 
