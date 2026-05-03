@@ -12,6 +12,7 @@ Dokumentacja procesu Project Manager: rejestr template’ów, provisioning z Iss
 ## Important Files
 
 - `features/template-registry.md`: mapowanie template → repo docelowe.
+- `features/systems-registry.md`: rejestr zainicjowanych systemów w tym repo.
 - `features/provisioning-workflow.md`: krok po kroku (Issue + label + sekrety).
 - `features/provisioning-example-mail-template-system.md`: przykład testowy „System do zarządzania szablonami maili”.
 

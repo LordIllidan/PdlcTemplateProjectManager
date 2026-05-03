@@ -17,8 +17,16 @@ Szablon repozytorium **Project Manager** dla PLDC: z poziomu **Issue** uruchamia
 
 Alternatywa: **Actions → Provision PLDC project repos → Run workflow** (ręczne uruchomienie z parametrami).
 
+## Lista zainicjowanych systemów
+
+Po każdym udanym provisioning CI aktualizuje:
+
+- [`docs/systems.md`](docs/systems.md) — tabela do przeglądania w GitHubie  
+- [`config/provisioned-systems.json`](config/provisioned-systems.json) — kanoniczny zapis (JSON)
+
 ## Po provisioning
 
+- Po każdym udanym provisioning CI aktualizuje **rejestr systemów** w tym samym repo: [`config/provisioned-systems.json`](config/provisioned-systems.json) oraz [`docs/systems.md`](docs/systems.md).
 - CI **nadpisuje** w `*-hub` plik `config/solutions/sample.json` (URL-e do `*-fe`, `*-api`, `*-db`, `*-gitops` oraz `project.name` / `project.code` z danych provisioning).
 - W repozytorium **`*-docs`** zbieraj dokumentację projektu; w kodzie trzymaj tylko odesłania do `docs/`.
 

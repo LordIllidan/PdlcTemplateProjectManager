@@ -12,6 +12,8 @@ Orkiestracja tworzenia zestawu repozytoriów projektu PLDC z szablonów GitHub o
 ## Important Files
 
 - `config/templates.json`: lista template → docelowe sufiksy nazw repozytoriów.
+- `config/provisioned-systems.json`: rejestr zainicjowanych systemów (uzupełniany przez CI).
+- `docs/systems.md`: tabela systemów (generowana przez CI).
 - `.github/workflows/provision-project-repos.yml`: provisioning z Issue lub `workflow_dispatch`.
 - `scripts/ci/Invoke-ProvisionRepos.ps1`: logika `gh repo create --template`.
 
